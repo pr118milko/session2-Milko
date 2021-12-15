@@ -1,0 +1,192 @@
+﻿<Page x:Class="Session2.Views.ProductsListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Session2.Views"
+      mc:Ignorable="d" 
+      FontFamily="Gabriola"
+      d:DesignHeight="520" d:DesignWidth="800"
+      Title="ProductsListPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="380"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Padding="10, 0, 10,0"
+                Background="{StaticResource WhiteBlue}"
+                BorderThickness="0,0,0,2">
+            <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    Grid.Row="0">
+                <TextBox 
+                    Name="search"
+                    Text="Введите для поиска"
+                    KeyUp="Search_KeyUp"
+                    FontSize="16"
+                    Padding="10,5,10,5"
+                         Width="200"
+                       Margin="0,0,20,0" TextChanged="Search_TextChanged"/>
+                <ComboBox
+                        Name ="ComboSort"
+                        Text="Отсортировать"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                       Margin="0,0,20,0"
+                      Width="240" SelectionChanged="ComboSort_SelectionChanged">
+                    <ComboBoxItem>Наименование убыв.</ComboBoxItem>
+                    <ComboBoxItem>Наименование возраст.</ComboBoxItem>
+                    <ComboBoxItem>Номер производственного цеха убыв.</ComboBoxItem>
+                    <ComboBoxItem>Номер производственного цеха возраст.</ComboBoxItem>
+                    <ComboBoxItem>Мин.стоимость убыв.</ComboBoxItem>
+                    <ComboBoxItem>Мин.стоимость возраст.</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Name ="ComboProductsTypes"
+                        FontSize="14"
+                        Text="Тип продукта"
+                        VerticalAlignment="Center"
+                        Margin="0,0,20,0"
+                        Width="240"
+                        DisplayMemberPath="Name" SelectionChanged="ComboProductsTypes_SelectionChanged">
+                </ComboBox>
+
+            </StackPanel>
+
+        </Border>
+
+        <StackPanel
+                    Grid.Row="1">
+            <ListView Name="productsList"
+                      Margin="0,0,0,20"
+                      Height="300"
+                      MouseDoubleClick="ProductsList_MouseDoubleClick">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="20, 10,20, 10"
+                              Height="120">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="550"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" 
+                                   VerticalAlignment="Center"
+                                   Height="80">
+                                <Image.Source>
+                                    <Binding Path="Image">
+                                        <Binding.TargetNullValue>
+                                            <ImageSource>
+                                                /Resources/listitem.png
+                                            </ImageSource>
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </Image.Source>
+                            </Image>
+                            <Border Grid.Column="1"
+                                    Cursor="Hand"
+                                    BorderThickness="1"
+                                    BorderBrush="Black"
+                                    Padding="20,10,20,10">
+                                <DockPanel VerticalAlignment="Top">
+                                    <StackPanel>
+                                        <TextBlock FontSize="24"
+                                                   Margin="0,0,0,5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} | {1}">
+                                                    <Binding Path="ProductsTypes.Name"/>
+                                                    <Binding Path="Name"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Артикул: "
+                                                   FontWeight="Bold"
+                                                   FontSize="16"
+                                                   Margin="0,0,5,0"/>
+                                                <TextBlock Text="{Binding Article, TargetNullValue='нет'}"
+                                                   FontSize="16"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Материалы: "
+                                                   FontWeight="Bold"
+                                                   FontSize="16"
+                                                   Margin="0,0,5,0"/>
+                                                <TextBlock Text="Набор 34М Клубника, Бумага 5М Дыня"
+                                                   FontSize="16"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   FontSize="20"
+                                                   Margin="0,0, 0, 30">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{} Сумма : {0}">
+                                                    <Binding Path="MinPrice"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Name="paginator">
+                <Button Content="1"
+                        Padding="20,0,20,0"
+                        Background="{StaticResource WhiteBlue}"
+                        Foreground="Black"
+                        FontWeight="Bold"
+                        Cursor="Hand"
+                        FontSize="20"
+                        Margin="0,0,20,0"></Button>
+                <Button Content="2"
+                        Padding="20,0,20,0"
+                        Background="{StaticResource WhiteBlue}"
+                        Foreground="Black"
+                        FontWeight="Bold"
+                        Cursor="Hand"
+                        FontSize="20"
+                        Margin="0,0,20,0"></Button>
+                <Button Content="3"
+                        Padding="20,0,20,0"
+                        Background="{StaticResource WhiteBlue}"
+                        Foreground="Black"
+                        FontWeight="Bold"
+                        Cursor="Hand"
+                        FontSize="20"
+                        Margin="0,0,20,0"></Button>
+                <Button Content="4"
+                        Padding="20,0,20,0"
+                        Background="{StaticResource WhiteBlue}"
+                        Foreground="Black"
+                        FontWeight="Bold"
+                        Cursor="Hand"
+                        FontSize="20"
+                        Margin="0,0,20,0"></Button>
+
+            </StackPanel>
+        </StackPanel>
+        <StackPanel
+                Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Button Content="Добавить продукцию"
+                        Padding="20,10,20,10"
+                        Background="{StaticResource Green}"
+                        Foreground="{StaticResource White}"
+                        FontWeight="Bold"
+                        Cursor="Hand"
+                        FontSize="16" Click="Button_Click_1"></Button>
+        </StackPanel>
+    </Grid>
+</Page>
+

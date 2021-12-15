@@ -1,0 +1,13 @@
+﻿<Application x:Class="Session2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Session2"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="White">#FFFFFF</SolidColorBrush>
+        <SolidColorBrush x:Key="WhiteBlue">#CEFFF9</SolidColorBrush>
+        <SolidColorBrush x:Key="Green">#00CC76</SolidColorBrush>
+        <SolidColorBrush x:Key="Red">Red</SolidColorBrush>
+                           
+    </Application.Resources>
+</Application>
